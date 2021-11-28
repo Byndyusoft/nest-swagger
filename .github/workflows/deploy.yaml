@@ -1,12 +1,9 @@
 name: deploy workflow
 
 on:
-  workflow_dispatch:
-    inputs:
-      dry_run:
-        description: Dry run
-        required: true
-        default: "false"
+  release:
+    types:
+      - published
 
 jobs:
   deploy:
@@ -15,22 +12,78 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
+
+      - name: checkout @nestjs/swagger
+        uses: actions/checkout@v2
         with:
-          fetch-depth: 0
+          repository: nestjs/swagger
+          ref: 5.1.5
+          path: ./upstream
 
       - name: install nodejs
         uses: actions/setup-node@v2
         with:
-          node-version: "14"
+          node-version: "16"
+          registry-url: https://registry.npmjs.org
+
+      - name: install sponge
+        run: |
+          sudo apt-get update
+          sudo apt-get install moreutils
+
+      - name: extract tag from ref
+        uses: rlespinasse/github-slug-action@v3.x
+
+      - name: extract version from tag
+        id: version
+        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF_SLUG | cut -c2-)
+
+      - name: change upstream package.json
+        working-directory: ./upstream
+        run: >-
+          jq
+          --arg name @byndyusoft/nest-swagger
+          --arg version ${{ steps.version.outputs.VERSION }}
+          --arg author Byndyusoft
+          --arg license Apache-2.0
+          --arg repository https://github.com/Byndyusoft/nest-swagger
+          '.name = $name |
+          .version = $version |
+          .author = $author |
+          .license = $license |
+          .repository = $repository'
+          package.json | sponge package.json
+
+      - name: change upstream LICENSE
+        run: cp ./LICENSE ./upstream
+
+      - name: change upstream README
+        run: cp ./README.md ./upstream
+
+      - name: apply patches
+        working-directory: ./upstream
+        run: git apply ../patches/*.patch
 
       - name: install dependencies
-        run: yarn install --production false --frozen-lockfile
+        working-directory: ./upstream
+        run: npm ci
+
+      - name: unit tests
+        working-directory: ./upstream
+        run: npm run test
+
+      - name: e2e tests
+        working-directory: ./upstream
+        run: npm run test:e2e
 
       - name: build
-        run: yarn run build
+        working-directory: ./upstream
+        run: |
+          npm run build
+          npx --no tsc index.ts --declaration
 
-      - name: semantic release
-        run: yarn semantic-release --dry-run ${{ github.event.inputs.dry_run }}
+      - name: publish
+        working-directory: ./upstream
+        run: npm publish --access public
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
