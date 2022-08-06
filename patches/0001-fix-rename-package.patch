@@ -1,14 +1,15 @@
-From 4279c053066c0efcb9be98c758d133fd23f34111 Mon Sep 17 00:00:00 2001
+From 52cf3b13d061974c8d773d1ae1a5b1e88bd3c4e1 Mon Sep 17 00:00:00 2001
 From: KillWolfVlad <KillWolfVlad@users.noreply.github.com>
-Date: Sun, 28 Nov 2021 15:19:17 +0500
+Date: Sat, 6 Aug 2022 09:34:24 +0500
 Subject: [PATCH 1/2] fix: rename package
 
 ---
- lib/plugin/plugin-constants.ts            |  2 +-
- test/plugin/fixtures/app.controller.ts    | 10 +++++-----
- test/plugin/fixtures/changed-class.dto.ts |  2 +-
- test/plugin/fixtures/es5-class.dto.ts     |  2 +-
- 4 files changed, 8 insertions(+), 8 deletions(-)
+ lib/plugin/plugin-constants.ts              |  2 +-
+ test/plugin/fixtures/app.controller-tabs.ts | 10 +++++-----
+ test/plugin/fixtures/app.controller.ts      | 10 +++++-----
+ test/plugin/fixtures/changed-class.dto.ts   |  2 +-
+ test/plugin/fixtures/es5-class.dto.ts       |  2 +-
+ 5 files changed, 13 insertions(+), 13 deletions(-)
 
 diff --git a/lib/plugin/plugin-constants.ts b/lib/plugin/plugin-constants.ts
 index 7106006..7910a5f 100644
@@ -19,6 +20,45 @@ index 7106006..7910a5f 100644
 -export const OPENAPI_PACKAGE_NAME = '@nestjs/swagger';
 +export const OPENAPI_PACKAGE_NAME = '@byndyusoft/nest-swagger';
  export const METADATA_FACTORY_NAME = '_OPENAPI_METADATA_FACTORY';
+diff --git a/test/plugin/fixtures/app.controller-tabs.ts b/test/plugin/fixtures/app.controller-tabs.ts
+index 1533d25..2b9090e 100644
+--- a/test/plugin/fixtures/app.controller-tabs.ts
++++ b/test/plugin/fixtures/app.controller-tabs.ts
+@@ -1,6 +1,6 @@
+ // prettier-ignore
+ export const appControllerWithTabsText = `import { Controller, Post, HttpStatus } from '@nestjs/common';
+-import { ApiOperation } from '@nestjs/swagger';
++import { ApiOperation } from '@byndyusoft/nest-swagger';
+ 
+ class Cat {}
+ 
+@@ -42,9 +42,9 @@ export class AppController {
+ export const appControllerWithTabsTextTranspiled = `\"use strict\";
+ Object.defineProperty(exports, \"__esModule\", { value: true });
+ exports.AppController = void 0;
+-const openapi = require(\"@nestjs/swagger\");
++const openapi = require(\"@byndyusoft/nest-swagger\");
+ const common_1 = require(\"@nestjs/common\");
+-const swagger_1 = require("@nestjs/swagger");
++const nest_swagger_1 = require("@byndyusoft/nest-swagger");
+ class Cat {
+ }
+ let AppController = class AppController {
+@@ -74,12 +74,12 @@ __decorate([
+     openapi.ApiResponse({ status: 201, type: Cat })
+ ], AppController.prototype, \"create\", null);
+ __decorate([
+-    swagger_1.ApiOperation({ summary: "find a Cat" }),
++    nest_swagger_1.ApiOperation({ summary: "find a Cat" }),
+     Get(),
+     openapi.ApiResponse({ status: 200, type: Cat })
+ ], AppController.prototype, \"findOne\", null);
+ __decorate([
+-    swagger_1.ApiOperation({ summary: "find all Cats im comment", description: 'find all Cats' }),
++    nest_swagger_1.ApiOperation({ summary: "find all Cats im comment", description: 'find all Cats' }),
+     Get(),
+     HttpCode(common_1.HttpStatus.NO_CONTENT),
+     openapi.ApiResponse({ status: common_1.HttpStatus.NO_CONTENT, type: [Cat] })
 diff --git a/test/plugin/fixtures/app.controller.ts b/test/plugin/fixtures/app.controller.ts
 index aab73ed..aaae46a 100644
 --- a/test/plugin/fixtures/app.controller.ts
@@ -27,9 +67,9 @@ index aab73ed..aaae46a 100644
  export const appControllerText = `import { Controller, Post, HttpStatus } from '@nestjs/common';
 -import { ApiOperation } from '@nestjs/swagger';
 +import { ApiOperation } from '@byndyusoft/nest-swagger';
-
+ 
  class Cat {}
-
+ 
 @@ -40,9 +40,9 @@ export class AppController {
  export const appControllerTextTranspiled = `\"use strict\";
  Object.defineProperty(exports, \"__esModule\", { value: true });
@@ -83,5 +123,6 @@ index 89c5f84..2ec0df1 100644
  var status_1 = require(\"./status\");
  var constants_1 = require(\"./constants\");
  var CreateCatDtoEs5 = /** @class */ (function () {
---
-2.34.1
+-- 
+2.36.2
+
