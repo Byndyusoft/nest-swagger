@@ -1,6 +1,6 @@
-From 10db1026afb7a2e4d949b44b365e680043a6a8f4 Mon Sep 17 00:00:00 2001
+From 818e79d6ac1b80a91dc42d6076efcbaf64c67db6 Mon Sep 17 00:00:00 2001
 From: KillWolfVlad <KillWolfVlad@users.noreply.github.com>
-Date: Sun, 16 Oct 2022 12:50:22 +0500
+Date: Tue, 4 Apr 2023 10:41:12 +0500
 Subject: [PATCH 1/2] fix: rename package
 
 ---
@@ -12,10 +12,10 @@ Subject: [PATCH 1/2] fix: rename package
  test/plugin/fixtures/create-cat-alt.dto.ts           |  2 +-
  test/plugin/fixtures/create-cat-alt2.dto.ts          |  2 +-
  test/plugin/fixtures/create-cat.dto.ts               |  2 +-
- test/plugin/fixtures/es5-class.dto.ts                |  2 +-
+ test/plugin/fixtures/es5-class.dto.ts                |  4 ++--
  test/plugin/fixtures/nullable.dto.ts                 |  2 +-
  test/plugin/fixtures/string-literal.dto.ts           |  2 +-
- 11 files changed, 25 insertions(+), 25 deletions(-)
+ 11 files changed, 26 insertions(+), 26 deletions(-)
 
 diff --git a/lib/plugin/plugin-constants.ts b/lib/plugin/plugin-constants.ts
 index 7106006..7910a5f 100644
@@ -66,7 +66,7 @@ index cf3887e..1fa4ac8 100644
      HttpCode(common_1.HttpStatus.NO_CONTENT),
      openapi.ApiResponse({ status: common_1.HttpStatus.NO_CONTENT, type: [Cat] })
 diff --git a/test/plugin/fixtures/app.controller-without-modifiers.ts b/test/plugin/fixtures/app.controller-without-modifiers.ts
-index d4c5dd2..447e324 100644
+index f41e68a..46bf3fe 100644
 --- a/test/plugin/fixtures/app.controller-without-modifiers.ts
 +++ b/test/plugin/fixtures/app.controller-without-modifiers.ts
 @@ -1,5 +1,5 @@
@@ -76,7 +76,7 @@ index d4c5dd2..447e324 100644
  
  class Cat {}
  
-@@ -61,9 +61,9 @@ export class AppController {
+@@ -65,9 +65,9 @@ export class AppController {
  export const appControllerWithoutModifiersTextTranspiled = `\"use strict\";
  Object.defineProperty(exports, \"__esModule\", { value: true });
  exports.AppController = void 0;
@@ -88,7 +88,7 @@ index d4c5dd2..447e324 100644
  class Cat {
  }
  let AppController = class AppController {
-@@ -114,17 +114,17 @@ __decorate([
+@@ -119,17 +119,17 @@ __decorate([
      openapi.ApiResponse({ status: 201, type: Cat })
  ], AppController.prototype, \"testCreate\", null);
  __decorate([
@@ -206,7 +206,7 @@ index 6052466..afabd51 100644
  var Status;
  (function (Status) {
 diff --git a/test/plugin/fixtures/es5-class.dto.ts b/test/plugin/fixtures/es5-class.dto.ts
-index 89c5f84..2ec0df1 100644
+index 9911ae1..be0ec61 100644
 --- a/test/plugin/fixtures/es5-class.dto.ts
 +++ b/test/plugin/fixtures/es5-class.dto.ts
 @@ -19,7 +19,7 @@ export class CreateCatDtoEs5 {
@@ -218,6 +218,15 @@ index 89c5f84..2ec0df1 100644
  var status_1 = require(\"./status\");
  var constants_1 = require(\"./constants\");
  var CreateCatDtoEs5 = /** @class */ (function () {
+@@ -46,7 +46,7 @@ exports.CreateCatDtoEs5 = CreateCatDtoEs5;
+ export const es5CreateCatDtoTextTranspiledV5 = `\"use strict\";
+ Object.defineProperty(exports, \"__esModule\", { value: true });
+ exports.CreateCatDtoEs5 = void 0;
+-var openapi = require(\"@nestjs/swagger\");
++var openapi = require(\"@byndyusoft/nest-swagger\");
+ var status_1 = require(\"./status\");
+ var constants_1 = require(\"./constants\");
+ var CreateCatDtoEs5 = exports.CreateCatDtoEs5 = /** @class */ (function () {
 diff --git a/test/plugin/fixtures/nullable.dto.ts b/test/plugin/fixtures/nullable.dto.ts
 index c94ea48..9e68017 100644
 --- a/test/plugin/fixtures/nullable.dto.ts
@@ -245,5 +254,5 @@ index 9192e1a..22e5314 100644
      static _OPENAPI_METADATA_FACTORY() {
          return { valueOne: { required: true, type: () => String }, valueTwo: { required: true, type: () => Object } };
 -- 
-2.36.2
+2.40.0
 
